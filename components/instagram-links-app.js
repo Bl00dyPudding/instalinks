@@ -109,7 +109,6 @@ class InstagramLinksApp extends NativeComponent {
 			return section
 		})
 		this.shadowRoot.append(...elements)
-
 		this.changeTitle()
 	}
 
