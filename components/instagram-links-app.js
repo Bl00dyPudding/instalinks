@@ -5,15 +5,65 @@ class InstagramLinksApp extends NativeComponent {
 		<style>
 			:host {
 				padding: 10px;
+				width: 100%;
+				max-width: 935px;
 			}
+			
 			h1 {
 				font-size: 2em;
 			}
+			
+			header {
+				margin: 0.8em 0;
+				display: flex;
+				align-items: center;
+				position: relative;
+			}
+			
+			.avatar-overlay {
+				width: 74px;
+				height: 74px;
+				border-radius: 50%;
+				background: linear-gradient(rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+				animation: spin 2s linear infinite;
+				transform-origin: 50% 50%;
+				min-width: 74px;
+			}
+			
+			.avatar {
+			    position: absolute;
+			    left: 37px;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				background-image: url('./img/avatar.jpg');
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				z-index: 999;
+			}
+			
+			.nickname {
+				font-size: 2.5em;
+				font-weight: 100;
+				margin-left: 20px;
+			}
+			
+			@keyframes spin {
+				100% {transform: rotate(360deg)}
+			}
+
 		</style>
 	`}
 
 	get html() { return `
-		
+		<header>
+			<div class="avatar-overlay"></div>
+			<div class="avatar"></div>
+			<div class="nickname">Bloody Pudding</div>
+		</header>
 	`}
 
 	constructor() {
