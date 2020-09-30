@@ -1,0 +1,52 @@
+{
+  "heading": {
+    "nickname": "Bloody Pudding",
+    "avatar": "./img/avatar.jpg"
+  },
+  "groups": [
+    {
+      "title": "СМИ",
+      "buttons": [
+        {
+          "name": "Интервью для GeekBrains 🧠",
+          "link": "https://geekbrains.ru/posts/prodavat-telefony-ehto-ne-moyo"
+        },
+        {
+          "name": "Интервью для Knife 🔪",
+          "link": "https://knife.media/feature/search-yourself/"
+        }
+      ]
+    },
+    {
+      "title": "Проекты",
+      "buttons": [
+        {
+          "name": "Генератор паролей 🎰",
+          "link": "https://password.vladislavershov.com"
+        }
+      ]
+    },
+    {
+      "title": "Соцсети",
+      "small": true,
+      "buttons": [
+        {
+          "name": "VK",
+          "link": "https://vk.com/bloodypudding"
+        },
+        {
+          "name": "FB",
+          "link": "https://fb.com/bloodypudding"
+        },
+        {
+          "name": "IG",
+          "link": "https://instagram.com/bloodypudding"
+        },
+        {
+          "name": "TG",
+          "link": "https://t.me/bloodypudding"
+        }
+      ]
+    }
+  ]
+}

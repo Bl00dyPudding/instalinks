@@ -38,7 +38,6 @@ class InstagramLinksApp extends NativeComponent {
 				width: 70px;
 				height: 70px;
 				border-radius: 50%;
-				background-image: url('./img/avatar.jpg');
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: cover;
@@ -51,6 +50,11 @@ class InstagramLinksApp extends NativeComponent {
 				margin-left: 20px;
 			}
 			
+			.small-buttons {
+				display: grid;
+				grid-column-gap: 10px;
+			}
+			
 			@keyframes spin {
 				100% {transform: rotate(360deg)}
 			}
@@ -59,57 +63,69 @@ class InstagramLinksApp extends NativeComponent {
 	`}
 
 	get html() { return `
-		<header>
-			<div class="avatar-overlay"></div>
-			<div class="avatar"></div>
-			<div class="nickname">Bloody Pudding</div>
-		</header>
+
 	`}
 
 	constructor() {
 		super()
-		this.links = [
-			{
-				title: 'СМИ',
-				buttons: [
-					{
-						name: 'Интервью для GeekBrains 🧠',
-						link: 'https://geekbrains.ru/posts/prodavat-telefony-ehto-ne-moyo'
-					},
-					{
-						name: 'Интервью для Knife 🔪',
-						link: 'https://knife.media/feature/search-yourself/'
-					}
-				]
-			},
-			{
-				title: 'Проекты',
-				buttons: [
-					{
-						name: 'Генератор паролей 🎰',
-						link: 'http://password.vladislavershov.com'
-					}
-				]
-			}
-		]
 	}
 
 	connectedCallback() {
-		const elements = this.links.map(group => {
+		fetch('config.json')
+			.then(response => response.json())
+			.then(result => {
+				this.renderHeader(result.heading)
+				this.renderElements(result.groups)
+			})
+
+		this.changeTitle()
+	}
+
+	renderHeader({nickname, avatar}) {
+		const header = document.createElement('header')
+
+		const overlay = document.createElement('div')
+		overlay.classList.add('avatar-overlay')
+
+		const image = document.createElement('div')
+		image.classList.add('avatar')
+		image.style.backgroundImage = `url(${avatar})`
+
+		const text = document.createElement('div')
+		text.classList.add('nickname')
+		text.innerText = nickname
+
+		header.append(overlay, image, text)
+		this.shadowRoot.append(header)
+	}
+
+	renderElements(groups) {
+		const elements = groups.map(group => {
 			const section = document.createElement('section')
+
 			const title = document.createElement('h1')
 			title.innerText = group.title
-			const buttons = group.buttons.map(btn => {
-				const button = document.createElement('instagram-links-button')
-				button.name = btn.name
-				button.link = btn.link
-				return button
-			})
-			section.append(title, ...buttons)
+
+			const buttons = group.buttons.map(btn => this.createButton(btn))
+
+			const buttonWrapper = document.createElement('div')
+			if (group.small) {
+				buttonWrapper.classList.add('small-buttons')
+				buttonWrapper.style.gridTemplateColumns = `repeat(${buttons.length}, 1fr)`
+			}
+
+			buttonWrapper.append(...buttons)
+			section.append(title, buttonWrapper)
 			return section
 		})
 		this.shadowRoot.append(...elements)
-		this.changeTitle()
+	}
+
+	createButton(btn) {
+		const button = document.createElement('instagram-links-button')
+		button.name = btn.name
+		button.link = btn.link
+		return button
 	}
 
 	changeTitle() {
