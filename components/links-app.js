@@ -1,12 +1,13 @@
-class InstagramLinksApp extends NativeComponent {
+class LinksApp extends NativeComponent {
 	get css() { return `
 		<style>
 			:host {
 				width: 100%;
 				max-width: 440px;
-				/* Отступы по вертикали зависят от высоты окна: на ноутбуке всё влезает в экран,
-				   на высоком мониторе остаётся воздух */
-				padding: clamp(20px, 6vh, 56px) 20px clamp(16px, 3vh, 32px);
+				/* Отступы по вертикали зависят от высоты окна: на ноутбуке и телефоне всё влезает в экран,
+				   на высоком мониторе остаётся воздух. svh — видимая высота с учётом панелей браузера:
+				   обычный vh на мобильных считается без адресной строки, и низ страницы уезжал за экран */
+				padding: clamp(16px, 5svh, 56px) 20px clamp(12px, 2.5svh, 32px);
 				display: flex;
 				flex-direction: column;
 				min-height: 100vh;
@@ -17,14 +18,14 @@ class InstagramLinksApp extends NativeComponent {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				gap: clamp(10px, 2vh, 16px);
-				margin-bottom: clamp(18px, 3.5vh, 32px);
+				gap: clamp(8px, 1.6svh, 16px);
+				margin-bottom: clamp(14px, 3svh, 32px);
 			}
 
 			.avatar-ring {
 				position: relative;
-				width: clamp(88px, 13vh, 108px);
-				height: clamp(88px, 13vh, 108px);
+				width: clamp(80px, 12svh, 108px);
+				height: clamp(80px, 12svh, 108px);
 				border-radius: 50%;
 				display: grid;
 				place-items: center;
@@ -72,19 +73,19 @@ class InstagramLinksApp extends NativeComponent {
 			.cards {
 				display: flex;
 				flex-direction: column;
-				gap: clamp(8px, 1.4vh, 12px);
+				gap: clamp(8px, 1.2svh, 12px);
 			}
 
 			.icons {
 				display: flex;
 				justify-content: center;
 				gap: 12px;
-				margin-top: clamp(14px, 3vh, 24px);
+				margin-top: clamp(12px, 2.5svh, 24px);
 			}
 
 			.press {
 				margin-top: auto;
-				padding-top: clamp(20px, 5vh, 56px);
+				padding-top: clamp(16px, 3svh, 56px);
 				text-align: center;
 			}
 
@@ -189,7 +190,7 @@ class InstagramLinksApp extends NativeComponent {
 	}
 
 	createButton(btn, variant) {
-		const button = document.createElement('instagram-links-button')
+		const button = document.createElement('links-button')
 		Object.assign(button, { variant, name: btn.name, note: btn.note, icon: btn.icon, link: btn.link })
 		return button
 	}
@@ -207,4 +208,4 @@ class InstagramLinksApp extends NativeComponent {
 	}
 }
 
-customElements.define('instagram-links-app', InstagramLinksApp)
+customElements.define('links-app', LinksApp)

@@ -1,6 +1,6 @@
 // Ссылка в одном из трёх видов: card — крупная карточка с иконкой и подписью,
 // icon — круглая кнопка с одной иконкой, press — неприметная текстовая ссылка внизу.
-class InstagramLinksButton extends NativeComponent {
+class LinksButton extends NativeComponent {
 	get css() { return `
 		<style>
 			a {
@@ -191,4 +191,4 @@ class InstagramLinksButton extends NativeComponent {
 	}
 }
 
-customElements.define('instagram-links-button', InstagramLinksButton)
+customElements.define('links-button', LinksButton)
