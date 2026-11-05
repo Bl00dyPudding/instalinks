@@ -1,50 +1,74 @@
 {
   "heading": {
     "nickname": "Bloody Pudding",
-    "avatar": "./img/avatar.jpg"
+    "avatar": "./img/avatar.jpg",
+    "bio": "Пишу код, делаю штуки для себя и много играю"
   },
   "groups": [
     {
-      "title": "СМИ",
+      "style": "cards",
       "buttons": [
         {
-          "name": "Интервью для GeekBrains 🧠",
-          "link": "https://geekbrains.ru/posts/prodavat-telefony-ehto-ne-moyo"
+          "name": "Telegram",
+          "note": "@bloodypudding",
+          "icon": "telegram",
+          "link": "https://t.me/bloodypudding"
         },
         {
-          "name": "Интервью для Knife 🔪",
-          "link": "https://knife.media/feature/search-yourself/"
+          "name": "GitHub",
+          "note": "Bl00dyPudding",
+          "icon": "github",
+          "link": "https://github.com/Bl00dyPudding"
+        },
+        {
+          "name": "Steam",
+          "note": "BloodyPudding",
+          "icon": "steam",
+          "link": "https://steamcommunity.com/id/BloodyPudding"
+        },
+        {
+          "name": "Игровой дневник",
+          "note": "Отзывы и стата из Steam каждый день",
+          "icon": "gamepad",
+          "link": "https://t.me/bl00dypudd1ng"
         }
       ]
     },
     {
-      "title": "Проекты",
+      "style": "icons",
       "buttons": [
         {
-          "name": "Генератор паролей 🎰",
-          "link": "https://password.vladislavershov.com"
-        }
-      ]
-    },
-    {
-      "title": "Соцсети",
-      "small": true,
-      "buttons": [
+          "name": "Instagram",
+          "icon": "instagram",
+          "link": "https://www.instagram.com/bloodypudding"
+        },
         {
-          "name": "VK",
+          "name": "ВКонтакте",
+          "icon": "vk",
           "link": "https://vk.com/bloodypudding"
         },
         {
-          "name": "FB",
-          "link": "https://fb.com/bloodypudding"
+          "name": "Facebook",
+          "icon": "facebook",
+          "link": "https://www.facebook.com/BloodyPudding/"
+        }
+      ]
+    },
+    {
+      "style": "press",
+      "title": "Интервью",
+      "buttons": [
+        {
+          "name": "VK Видео 🎬",
+          "link": "https://vkvideo.ru/video-15365973_456239816"
         },
         {
-          "name": "IG",
-          "link": "https://instagram.com/bloodypudding"
+          "name": "GeekBrains 🧠",
+          "link": "https://gb.ru/blog/prodavat-telefony-ehto-ne-moyo/"
         },
         {
-          "name": "TG",
-          "link": "https://t.me/bloodypudding"
+          "name": "Knife 🔪",
+          "link": "https://web.archive.org/web/20220423142139/https://knife.media/feature/search-yourself/"
         }
       ]
     }

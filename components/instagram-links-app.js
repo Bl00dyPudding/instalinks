@@ -1,69 +1,118 @@
-import('./instagram-links-button.js')
-
 class InstagramLinksApp extends NativeComponent {
 	get css() { return `
 		<style>
 			:host {
-				padding: 10px;
 				width: 100%;
-				max-width: 935px;
-			}
-			
-			h1 {
-				font-size: 2em;
-			}
-			
-			header {
-				margin: 0.8em 0;
+				max-width: 440px;
+				/* Отступы по вертикали зависят от высоты окна: на ноутбуке всё влезает в экран,
+				   на высоком мониторе остаётся воздух */
+				padding: clamp(20px, 6vh, 56px) 20px clamp(16px, 3vh, 32px);
 				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				min-height: 100dvh;
+			}
+
+			header {
+				display: flex;
+				flex-direction: column;
 				align-items: center;
+				gap: clamp(10px, 2vh, 16px);
+				margin-bottom: clamp(18px, 3.5vh, 32px);
+			}
+
+			.avatar-ring {
 				position: relative;
-			}
-			
-			.avatar-overlay {
-				width: 74px;
-				height: 74px;
+				width: clamp(88px, 13vh, 108px);
+				height: clamp(88px, 13vh, 108px);
 				border-radius: 50%;
-				background: linear-gradient(rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-				animation: spin 2s linear infinite;
-				transform-origin: 50% 50%;
-				min-width: 74px;
-			}
-			
-			.avatar {
-			    position: absolute;
-			    left: 37px;
-				top: 50%;
-				transform: translate(-50%, -50%);
-				width: 70px;
-				height: 70px;
-				border-radius: 50%;
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: cover;
-				z-index: 999;
-			}
-			
-			.nickname {
-				font-size: 2.5em;
-				font-weight: 100;
-				margin-left: 20px;
-			}
-			
-			.small-buttons {
 				display: grid;
-				grid-column-gap: 10px;
+				place-items: center;
 			}
-			
+
+			/* Вращается только кольцо, фото стоит на месте */
+			.avatar-ring::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: 50%;
+				background: conic-gradient(var(--accent-a), var(--accent-b), var(--accent-a));
+				animation: spin 4s linear infinite;
+			}
+
+			.avatar {
+				position: relative;
+				width: calc(100% - 10px);
+				height: calc(100% - 10px);
+				border-radius: 50%;
+				border: 3px solid var(--bg);
+				background-color: var(--chip);
+				background-position: center;
+				background-size: cover;
+			}
+
+			h1 {
+				margin: 0;
+				font-size: 28px;
+				font-weight: 800;
+				letter-spacing: -0.02em;
+			}
+
+			.name {
+				text-align: center;
+			}
+
+			.bio {
+				margin: 6px 0 0;
+				font-size: 15px;
+				line-height: 1.4;
+				color: var(--muted);
+			}
+
+			.cards {
+				display: flex;
+				flex-direction: column;
+				gap: clamp(8px, 1.4vh, 12px);
+			}
+
+			.icons {
+				display: flex;
+				justify-content: center;
+				gap: 12px;
+				margin-top: clamp(14px, 3vh, 24px);
+			}
+
+			.press {
+				margin-top: auto;
+				padding-top: clamp(20px, 5vh, 56px);
+				text-align: center;
+			}
+
+			.press h2 {
+				margin: 0 0 4px;
+				font-size: 11px;
+				font-weight: 600;
+				letter-spacing: .12em;
+				text-transform: uppercase;
+				color: var(--muted);
+				opacity: .7;
+			}
+
+			.press .list {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				column-gap: 18px;
+			}
+
 			@keyframes spin {
-				100% {transform: rotate(360deg)}
+				to { transform: rotate(360deg) }
 			}
 
+			@media (prefers-reduced-motion: reduce) {
+				.avatar-ring::before { animation: none; }
+			}
 		</style>
-	`}
-
-	get html() { return `
-
 	`}
 
 	constructor() {
@@ -75,70 +124,87 @@ class InstagramLinksApp extends NativeComponent {
 			.then(response => response.json())
 			.then(result => {
 				this.renderHeader(result.heading)
-				this.renderElements(result.groups)
+				this.renderGroups(result.groups)
 			})
 
 		this.changeTitle()
 	}
 
-	renderHeader({nickname, avatar}) {
+	renderHeader({ nickname, avatar, bio }) {
 		const header = document.createElement('header')
 
-		const overlay = document.createElement('div')
-		overlay.classList.add('avatar-overlay')
+		const ring = document.createElement('div')
+		ring.className = 'avatar-ring'
 
 		const image = document.createElement('div')
-		image.classList.add('avatar')
+		image.className = 'avatar'
+		image.setAttribute('role', 'img')
+		image.setAttribute('aria-label', nickname)
 		image.style.backgroundImage = `url(${avatar})`
+		ring.append(image)
 
-		const text = document.createElement('div')
-		text.classList.add('nickname')
-		text.innerText = nickname
+		const title = document.createElement('h1')
+		title.textContent = nickname
 
-		header.append(overlay, image, text)
+		const name = document.createElement('div')
+		name.className = 'name'
+		name.append(title)
+		if (bio) {
+			const text = document.createElement('p')
+			text.className = 'bio'
+			text.textContent = bio
+			name.append(text)
+		}
+
+		header.append(ring, name)
 		this.shadowRoot.append(header)
 	}
 
-	renderElements(groups) {
-		const elements = groups.map(group => {
-			const section = document.createElement('section')
+	renderGroups(groups) {
+		const variants = { cards: 'card', icons: 'icon', press: 'press' }
 
-			const title = document.createElement('h1')
-			title.innerText = group.title
+		const sections = groups.map(group => {
+			const style = group.style in variants ? group.style : 'cards'
+			const section = document.createElement(style === 'press' ? 'footer' : 'section')
+			section.className = style
 
-			const buttons = group.buttons.map(btn => this.createButton(btn))
-
-			const buttonWrapper = document.createElement('div')
-			if (group.small) {
-				buttonWrapper.classList.add('small-buttons')
-				buttonWrapper.style.gridTemplateColumns = `repeat(${buttons.length}, 1fr)`
+			if (group.title) {
+				const title = document.createElement('h2')
+				title.textContent = group.title
+				section.append(title)
 			}
 
-			buttonWrapper.append(...buttons)
-			section.append(title, buttonWrapper)
+			const buttons = group.buttons.map(btn => this.createButton(btn, variants[style]))
+			if (style === 'press') {
+				const list = document.createElement('div')
+				list.className = 'list'
+				list.append(...buttons)
+				section.append(list)
+			} else {
+				section.append(...buttons)
+			}
 			return section
 		})
-		this.shadowRoot.append(...elements)
+		this.shadowRoot.append(...sections)
 	}
 
-	createButton(btn) {
+	createButton(btn, variant) {
 		const button = document.createElement('instagram-links-button')
-		button.name = btn.name
-		button.link = btn.link
+		Object.assign(button, { variant, name: btn.name, note: btn.note, icon: btn.icon, link: btn.link })
 		return button
 	}
 
 	changeTitle() {
-		const title = document.querySelector('title');
+		const title = document.title
 
-		window.onblur = () => {
-			title.innerText = 'Вернись...';
-		};
+		window.addEventListener('blur', () => {
+			document.title = 'Вернись...'
+		})
 
-		window.onfocus = () => {
-			title.innerText = 'InstaLinks';
-		};
-	};
+		window.addEventListener('focus', () => {
+			document.title = title
+		})
+	}
 }
 
 customElements.define('instagram-links-app', InstagramLinksApp)

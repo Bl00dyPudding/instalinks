@@ -9,7 +9,7 @@ nativeComponentTemplate.innerHTML = `
 		:host::before,
 		:host::after {
 			box-sizing: border-box;
-			font-family: 'Roboto', sans-serif;
+			font-family: 'Manrope', system-ui, -apple-system, sans-serif;
 		}
 		
 		:host,

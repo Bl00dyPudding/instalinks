@@ -1,19 +1,52 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>InstaLinks</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;900&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="favicon.ico">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloody Pudding</title>
+    <meta name="description" content="Bloody Pudding: пишу код, делаю штуки для себя и много играю">
+    <meta property="og:title" content="Bloody Pudding">
+    <meta property="og:description" content="Пишу код, делаю штуки для себя и много играю">
+    <meta property="og:image" content="https://links.bloodypudding.com/img/og.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" sizes="32x32 48x48">
+    <link rel="icon" href="img/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <meta name="theme-color" content="#f6f6f9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111116" media="(prefers-color-scheme: dark)">
     <style>
+        :root {
+            --bg: #f6f6f9;
+            --card: #ffffff;
+            --chip: #f0f0f5;
+            --line: #e4e4ec;
+            --text: #16161d;
+            --muted: #6b6b7b;
+            --accent-a: #3f5efb;
+            --accent-b: #fc466b;
+            --shadow: 0 1px 2px rgba(22, 22, 29, .04), 0 4px 16px rgba(22, 22, 29, .06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #111116;
+                --card: #1b1b22;
+                --chip: #26262f;
+                --line: #2c2c36;
+                --text: #f2f2f7;
+                --muted: #9a9aab;
+                --shadow: none;
+            }
+        }
+
         body {
-            padding: 0;
             margin: 0;
-            background-color: #ffffff;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
             display: flex;
             justify-content: center;
         }
@@ -22,6 +55,7 @@
 <body>
     <instagram-links-app></instagram-links-app>
     <script src="components/native-component.js"></script>
+    <script src="components/instagram-links-button.js"></script>
     <script src="components/instagram-links-app.js"></script>
 </body>
 </html>
