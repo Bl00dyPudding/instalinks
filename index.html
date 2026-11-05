@@ -45,6 +45,9 @@
         body {
             margin: 0;
             min-height: 100vh;
+            /* dvh — видимая высота: на мобильных 100vh выше экрана на адресную строку,
+               а приложение растягивается по body, и прижатый к низу блок уезжал за край */
+            min-height: 100dvh;
             background: var(--bg);
             color: var(--text);
             display: flex;
